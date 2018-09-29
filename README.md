@@ -1,4 +1,4 @@
-# es-java-client-sample
+# elasticsearch-tcp-client-maven-sample
  Prerequisite : Java 8 and Later version 
 
 ### Start ElasticSearch
