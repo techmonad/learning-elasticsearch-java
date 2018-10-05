@@ -1,19 +1,21 @@
-package com.es.app;
+package com.techmonad.es.app;
 
 
-import com.es.service.CountService;
-import com.es.service.DataService;
-import com.es.service.DeleteService;
-import com.es.service.IngestService;
-import com.es.util.ESManager;
+import com.techmonad.es.service.CountService;
+import com.techmonad.es.service.DataService;
+import com.techmonad.es.service.DeleteService;
+import com.techmonad.es.service.IngestService;
+import com.techmonad.es.util.ESManager;
 import org.elasticsearch.client.Client;
+
+import java.util.Arrays;
 
 
 public class ESApp {
 
     public static void main(String[] args) {
-        ESManager esManager = new ESManager();
-        Client client = esManager.getClient("localhost", 9300).get();
+
+        Client client = ESManager.getClient("localhost", 9300).get();
 
         CountService countService = new CountService(client);
         DataService dataService = new DataService(client);
@@ -48,17 +50,17 @@ public class ESApp {
                 "\"job\":\"assiant\"," +
                 "\"location\":\"Meana\"" +
                 "}";
+
         // ingest single record
-        // System.out.println("\nIngestService response::: " +ingestService.ingest("tweet",json) );
+        boolean isIngested = ingestService.ingest("tweet", json1);
+
+        System.out.println("\nIngestService response::: " + isIngested);
 
         // ingest batch of records
-        //  System.out.println("\nIngestService response::: " + ingestService.ingest("tweet", Arrays.asList(json1, json2)));
+        System.out.println("\nIngestService response::: " + ingestService.ingest("tweet", Arrays.asList(json1, json2)));
 
 
         // Delete
-        // delete one record by id
-        //System.out.println("delete by id " + deleteService.delete("AVSMh1LBWlqOklhqtVNs"));
-        //delete record by query
         System.out.println("delete by query " + deleteService.deleteByQuery("satendra"));
         client.close();
 

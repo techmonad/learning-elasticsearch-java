@@ -1,4 +1,4 @@
-package com.es.service;
+package com.techmonad.es.service;
 
 
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
