@@ -13,19 +13,21 @@ import org.elasticsearch.index.query.QueryBuilders;
 public class DeleteService {
 
 
-    Client client;
+    private Client client;
 
     public DeleteService(Client client) {
         this.client = client;
     }
 
 
-    public boolean delete(String id) {
-        return client.prepareDelete("test", "tweet", id).get().isFound();
+    public boolean delete(String index, String type, String id) {
+        return client.prepareDelete(index, type, id).get().isFound();
     }
 
-    public long deleteByQuery(String name) {
-        return new DeleteByQueryRequestBuilder(client, DeleteByQueryAction.INSTANCE).setQuery(QueryBuilders.termQuery("name", name))
+    public long deleteByQuery(String index, String name) {
+        return new DeleteByQueryRequestBuilder(client, DeleteByQueryAction.INSTANCE)
+                .setIndices(index)
+                .setQuery(QueryBuilders.termQuery("name", name))
                 .execute().actionGet().getTotalDeleted();
     }
 }

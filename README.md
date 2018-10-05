@@ -14,6 +14,6 @@
      $ git clone git@github.com:techmonad/elasticsearch-crud-with-tcp-client.git
 ### Run project 
     $ mvn package
-    $ mvn exec:java -Dexec.mainClass="com.es.app.ESApp"
+    $ mvn exec:java -Dexec.mainClass="com.techmonad.es.app.ESApp"
     
 

@@ -21,22 +21,23 @@ public class ESApp {
         DataService dataService = new DataService(client);
         IngestService ingestService = new IngestService(client);
         DeleteService deleteService = new DeleteService(client);
+        String indexName = "test";
 
         //count
-        System.out.println("\ngetMatchAllQueryCount from ES::: " + countService.getMatchAllQueryCount());
-        System.out.println("\ngetBoolQueryCount from ES::: " + countService.getBoolQueryCount());
-        System.out.println("\ngetPhraseQueryCount from ES::: " + countService.getPhraseQueryCount());
+        System.out.println("\ngetMatchAllQueryCount from ES::: " + countService.getMatchAllQueryCount(indexName));
+        System.out.println("\ngetBoolQueryCount from ES::: " + countService.getBoolQueryCount(indexName));
+        System.out.println("\ngetPhraseQueryCount from ES::: " + countService.getPhraseQueryCount(indexName));
 
 
         // Data
         System.out.println("\ngetMatchAllQueryData from ES::: ");
-        dataService.getMatchAllQueryData().forEach(item -> System.out.println(item));
+        dataService.getMatchAllQueryData(indexName).forEach(item -> System.out.println(item));
 
         System.out.println("\ngetBoolQueryData from ES::: ");
-        dataService.getBoolQueryData().forEach(item -> System.out.println(item));
+        dataService.getBoolQueryData(indexName).forEach(item -> System.out.println(item));
 
         System.out.println("\ngetPhraseQueryData from ES::: ");
-        dataService.getPhraseQueryData().forEach(item -> System.out.println(item));
+        dataService.getPhraseQueryData(indexName).forEach(item -> System.out.println(item));
 
         //Ingest
         String json1 = "{" +
@@ -52,16 +53,16 @@ public class ESApp {
                 "}";
 
         // ingest single record
-        boolean isIngested = ingestService.ingest("tweet", json1);
+        boolean isIngested = ingestService.ingest(indexName,"tweet", json1);
 
         System.out.println("\nIngestService response::: " + isIngested);
 
         // ingest batch of records
-        System.out.println("\nIngestService response::: " + ingestService.ingest("tweet", Arrays.asList(json1, json2)));
+        System.out.println("\nIngestService response::: " + ingestService.ingest(indexName, "tweet", Arrays.asList(json1, json2)));
 
 
         // Delete
-        System.out.println("delete by query " + deleteService.deleteByQuery("satendra"));
+        System.out.println("delete by query " + deleteService.deleteByQuery(indexName, "satendra"));
         client.close();
 
     }

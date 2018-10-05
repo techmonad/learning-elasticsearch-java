@@ -6,6 +6,8 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -13,48 +15,48 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class DataService {
 
 
-    Client client;
+    private Client client;
 
     public DataService(Client client) {
         this.client = client;
     }
 
-    public List<String> getMatchAllQueryData() {
+    public List<String> getMatchAllQueryData(String index) {
         QueryBuilder query = matchAllQuery();
         System.out.println("getMatchAllQueryCount query =>" + query.toString());
-        SearchHit[] hits = client.prepareSearch("test").setQuery(query).execute().actionGet().getHits().getHits();
+        SearchHit[] hits = client.prepareSearch(index).setQuery(query).execute().actionGet().getHits().getHits();
         List<String> list = new ArrayList<String>();
-        for (SearchHit hit : hits) {
-            // hit.sourceAsMap()
-            list.add(hit.getSourceAsString());
-        }
-        return list;
+        Arrays.stream(hits)
+                .forEach(hit -> list.add(hit.getSourceAsString()));
+        return Collections.unmodifiableList(list);
     }
 
-    public List<String> getBoolQueryData() {
+    public List<String> getBoolQueryData(String index) {
         QueryBuilder query = boolQuery().must(
                 termQuery("name", "satendra")
         ).must(termQuery("location", "india"));
         System.out.println("getBoolQueryCount query =>" + query.toString());
-        SearchHit[] hits = client.prepareSearch("test").setQuery(query).execute().actionGet().getHits().getHits();
+        SearchHit[] hits = client.prepareSearch(index)
+                .setQuery(query).execute().actionGet().getHits().getHits();
         List<String> list = new ArrayList<String>();
-        for (SearchHit hit : hits) {
-            // hit.sourceAsMap()
-            list.add(hit.getSourceAsString());
-        }
-        return list;
+        Arrays.stream(hits)
+                .forEach(hit -> list.add(hit.getSourceAsString()));
+        return Collections.unmodifiableList(list);
     }
 
-    public List<String> getPhraseQueryData() {
+    public List<String> getPhraseQueryData(String index) {
         QueryBuilder query = matchPhraseQuery("name", "satendra");
         System.out.println("getPhraseQueryCount query =>" + query.toString());
-        SearchHit[] hits = client.prepareSearch("test").setQuery(query).execute().actionGet().getHits().getHits();
+        SearchHit[] hits = client.prepareSearch(index)
+                .setQuery(query)
+                .execute()
+                .actionGet()
+                .getHits()
+                .getHits();
         List<String> list = new ArrayList<String>();
-        for (SearchHit hit : hits) {
-            // hit.sourceAsMap()
-            list.add(hit.getSourceAsString());
-        }
-        return list;
+        Arrays.stream(hits)
+                .forEach(hit -> list.add(hit.getSourceAsString()));
+        return Collections.unmodifiableList(list);
     }
 
 
