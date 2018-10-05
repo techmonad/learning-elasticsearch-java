@@ -1,4 +1,4 @@
-package com.es.util;
+package com.techmonad.es.util;
 
 
 import org.elasticsearch.client.Client;
@@ -14,7 +14,7 @@ public class ESManager {
 
 
 
-    public Optional<Client> getClient(String host, int port) {
+    public static Optional<Client> getClient(String host, int port) {
         try {
             Settings.Builder setting =Settings.builder().put("client.transport.sniff", false);
             TransportClient client = TransportClient.builder().settings(setting).addPlugin(DeleteByQueryPlugin.class).build()
