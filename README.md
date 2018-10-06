@@ -1,4 +1,4 @@
-# elasticsearch-crud-with-tcp-client
+# learning-elasticsearch-java
  Prerequisite : Java 8 and Later version 
 
 ### Start Elasticsearch
@@ -11,9 +11,9 @@
       $ sh initial-data.sh
 
 ### Clone the code:
-     $ git clone git@github.com:techmonad/elasticsearch-crud-with-tcp-client.git
+     $ git clone git@github.com:techmonad/learning-elasticsearch-java.git
 ### Run project 
     $ mvn package
-    $ mvn exec:java -Dexec.mainClass="com.es.app.ESApp"
+    $ mvn exec:java -Dexec.mainClass="com.techmonad.es.app.ESApp"
     
 
